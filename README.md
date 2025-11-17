@@ -27,62 +27,45 @@ Use Closing Operation
  
 ## Program:
 ```
-import cv2
+# Import the necessary packages
 import numpy as np
+import cv2
 import matplotlib.pyplot as plt
 
-# Step 1: Load the image using cv2.imread()
-image = cv2.imread("Fish.jpg")  
+# Create the Text using cv2.putText
+img = np.zeros((300, 600), dtype='uint8')
+font = cv2.FONT_ITALIC
+cv2.putText(img, "Kamesh", (5, 150), font, 3, (255), 5, cv2.LINE_AA)
+cv2.imshow("Original", img)
+cv2.waitKey(0)
 
-# Step 2: Create a structuring element (5x5 rectangular)
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+# Create the structuring element
+kernel_open = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+kernel_close = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))
 
-# Step 3: Use Opening operation (erosion followed by dilation)
-opening_image = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
+# Use Opening operation
+opened = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel_open)
+cv2.imshow("Opening", opened)
+cv2.waitKey(0)
 
-# Step 4: Use Closing operation (dilation followed by erosion)
-closing_image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
-
-# Convert images from BGR to RGB for Matplotlib
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-opening_image_rgb = cv2.cvtColor(opening_image, cv2.COLOR_BGR2RGB)
-closing_image_rgb = cv2.cvtColor(closing_image, cv2.COLOR_BGR2RGB)
-
-# Plot the original, opening, and closing images using Matplotlib
-plt.figure(figsize=(10, 5))
-
-plt.subplot(1, 3, 1)
-plt.imshow(image_rgb)
-plt.title("Original Image")
-plt.axis("off")
-
-plt.subplot(1, 3, 2)
-plt.imshow(opening_image_rgb)
-plt.title("Opening Operation")
-plt.axis("off")
-
-plt.subplot(1, 3, 3)
-plt.imshow(closing_image_rgb)
-plt.title("Closing Operation")
-plt.axis("off")
-
-plt.tight_layout()
-plt.show()
-
+# Use Closing Operation
+closed = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel_close)
+cv2.imshow("Closing", closed)
+cv2.waitKey(0)
 ```
 ## Output:
 
 ### Display the input Image
-![image](https://github.com/user-attachments/assets/c6772ac7-5d88-46ba-9c06-f63c15e3c7ed)
+![WhatsApp Image 2025-11-17 at 11 04 25 AM (2)](https://github.com/user-attachments/assets/ef95ece7-2785-4916-9885-121d2dc8143f)
 
 
 ### Display the result of Opening
-![image](https://github.com/user-attachments/assets/1dc47e42-1357-449e-9d9b-6984ddb666a6)
+![WhatsApp Image 2025-11-17 at 11 04 25 AM (1)](https://github.com/user-attachments/assets/296cf431-232b-4184-a2d7-fbf26e010760)
 
 
 
 ### Display the result of Closing
-![image](https://github.com/user-attachments/assets/4f0cd2c5-bbdd-4cbc-bf99-ab1bc25001be)
+![WhatsApp Image 2025-11-17 at 11 04 25 AM](https://github.com/user-attachments/assets/b9c3dc1f-1b81-4792-816b-b62f31a7a69c)
 
 
 
